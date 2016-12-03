@@ -5,7 +5,7 @@ services:
     ports:
       - "2000:2000"
     environment:
-      AWS_REGION: "<region>"
+      AWS_REGION: "{{ AWS_REGION }}"
       AWS_PROFILE: "default"
     command: [
       "--bind", "0.0.0.0:2000",
@@ -25,7 +25,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      AWS_REGION: "<region>"
+      AWS_REGION: "{{ AWS_REGION }}"
       AWS_PROFILE: "default"
     command: [
       "--bind", "0.0.0.0:3000",

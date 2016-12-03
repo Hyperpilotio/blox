@@ -10,7 +10,7 @@ def parse_cli_args(desc, args):
 	obj = Object()
 
 	# Print header.
-	print "== Blox Demo CLI - %s ==\n" % desc
+	#print "== Blox Demo CLI - %s ==\n" % desc
 
 	# Create argument parser.
 	parser = argparse.ArgumentParser(description=desc)
@@ -43,7 +43,7 @@ def parse_cli_args(desc, args):
 			sys.exit(1)
 		else:
 			setattr(obj, arg['dest'], value)
-	print "\n"
+	#print "\n"
 
 	# Return an object containing all argument values.
 	return obj

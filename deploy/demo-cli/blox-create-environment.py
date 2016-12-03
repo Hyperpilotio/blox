@@ -37,7 +37,7 @@ def run_apigateway(params):
 
 	try:
 		obj = json.loads(response['body'])
-		print json.dumps(obj, indent=2)
+		print obj #print json.dumps(obj, indent=2)
 	except Exception as e:
 		print "Error: Could not parse response - %s" % e
 		print json.dumps(response, indent=2)
