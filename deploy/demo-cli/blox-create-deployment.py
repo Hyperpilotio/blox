@@ -31,7 +31,7 @@ def run_apigateway(params):
 	command = ["apigateway", "test-invoke-method", "--rest-api-id", restApi['StackResourceDetail']['PhysicalResourceId'], "--resource-id", restResource['StackResourceDetail']['PhysicalResourceId'], "--http-method", "POST", "--headers", "{}", "--path-with-query-string", "/v1/environments/%s/deployments?deploymentToken=%s" % (params.environment, params.token), "--body", ""]
 	response = common.run_shell_command(params.region, command)
 
-	print "HTTP Response Code: %d" % response['status']
+	#print "HTTP Response Code: %d" % response['status']
 
 	try:
 		obj = json.loads(response['body'])
@@ -52,7 +52,7 @@ def run_local(params):
 
 	response = common.call_api(api)
 
-	print "HTTP Response Code: %d" % response.status
+	#print "HTTP Response Code: %d" % response.status
 
 	try:
 		obj = json.loads(response.body)
