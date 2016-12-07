@@ -10,10 +10,9 @@ def main(argv):
 	else:
 		args.extend([{'arg':'--host', 'dest':'host', 'default':'localhost:2000', 'help':'Blox Scheduler <Host>:<Port>'}])
 	args.extend([{'arg':'--environment', 'dest':'environment', 'default':None, 'help':'Blox environment name'}])
-	args.extend([{'arg':'--cluster', 'dest':'cluster', 'default':None, 'help':'ECS cluster name'}])
 
 	# Parse Command Line Arguments
-	params = common.parse_cli_args('Create Blox Environment', args)
+	params = common.parse_cli_args('Delete Blox Environment', args)
 
 	if params.apigateway:
 		run_apigateway(params)
@@ -28,12 +27,11 @@ def run_apigateway(params):
 	command = ["cloudformation", "describe-stack-resource", "--stack-name", params.stack, "--logical-resource-id", "ApiResource"]
 	restResource = common.run_shell_command(params.region, command)
 
-	command = ["apigateway", "test-invoke-method", "--rest-api-id", restApi['StackResourceDetail']['PhysicalResourceId'], "--resource-id", restResource['StackResourceDetail']['PhysicalResourceId'], "--http-method", "DELETE", "--headers", "{}", "--path-with-query-string", "/v1/environments/" + params.environment]
+	command = ["apigateway", "test-invoke-method", "--rest-api-id", restApi['StackResourceDetail']['PhysicalResourceId'], "--resource-id", restResource['StackResourceDetail']['PhysicalResourceId'], "--http-method", "DELETE", "--headers", "{}", "--path-with-query-string", "/v1/environments/{}".format(params.environment)]
 	response = common.run_shell_command(params.region, command)
 
-        if response['status'] == 200:
-                sys.exit(0)
-	#print "HTTP Response Code: %d" % response['status']
+  if response['status'] == 200:
+    sys.exit(0)
 
 	try:
 		obj = json.loads(response['body'])
@@ -49,12 +47,12 @@ def run_local(params):
 	api.method = 'DELETE'
 	api.headers = {}
 	api.host = params.host
-	api.uri = '/v1/environments/' + parans.environment
+	api.uri = '/v1/environments/{}'.format(params.environment)
 
 	response = common.call_api(api)
 
-        if response['status'] == 200:
-                sys.exit(0)
+  if response['status'] == 200:
+          sys.exit(0)
 	#print "HTTP Response Code: %d" % response.status
 
 	try:
